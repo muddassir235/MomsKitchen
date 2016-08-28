@@ -38,3 +38,15 @@ captures/
 
 # Keystore files
 *.jks
+app/build/
+*.json
+app/google-services.json
+app/src/main/res/values/keys.xml
+
+app/libs/
+
+/local.properties
+.DS_Store
+.idea/misc.xml
+/.idea/workspace.xml
+/.idea/libraries
