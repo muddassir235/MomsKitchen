@@ -1,6 +1,7 @@
 package com.momskitchen.momskitchen;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.momskitchen.momskitchen.backend.FirebaseOperations;
 
 public class CustomerMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,7 +33,19 @@ public class CustomerMainActivity extends AppCompatActivity
         setContentView(R.layout.activity_customer_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        FirebaseOperations.getInstance().uploadImage(this).setImageUploadEventListener(
+                new FirebaseOperations.ImageUploadEventListener() {
+                    @Override
+                    public void onFailure(Exception exception) {
 
+                    }
+
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.e("Customer:URI",uri.toString());
+                    }
+                }
+        );
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,5 +132,16 @@ public class CustomerMainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            if(requestCode==Constants.FIREBASE_OPERATION_SELECT_PICTURE){
+                FirebaseOperations.getInstance().uploadTask("hellolo",Constants.FIREBASE_OPERATION_CATEGORY_COMPLIMENT,data.getData(),Constants.FIREBASE_OPERATION_UPLOAD_THUMBNAIL);
+
+            }
+        }
     }
 }
