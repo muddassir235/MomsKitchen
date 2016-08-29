@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.momskitchen.momskitchen.NewMealActivity"
+    tools:showIn="@layout/activity_new_meal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <!-- Login progress -->
+
+
+
+        <ScrollView
+            android:id="@+id/new_ticket_form_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/new_ticket_form_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/description_icon_image_view"
+                        android:layout_width="22sp"
+                        android:layout_height="22sp"
+                        android:src="@drawable/description_icon"/>
+
+                    <EditText
+                        android:id="@+id/meal_description_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_room_number"
+                        android:inputType="textMultiLine"
+                        android:singleLine="true"
+                        android:background="#00ffffff"
+                        android:textSize="15sp"
+                        android:gravity="top"
+                        android:textColor="@color/colorPrimaryXXDark"
+                        android:layout_toRightOf="@+id/description_icon_image_view"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:textColorHint="@color/colorPrimary"
+                        />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="16dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="22sp"
+                        android:layout_height="22sp"
+                        android:src="@drawable/price_icon"
+                        android:layout_gravity="center"/>
+
+                    <EditText
+                        android:id="@+id/price_meal_entry_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Price (in PKR)"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:background="#00ffffff"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:textColor="@color/colorPrimaryXXDark"
+                        android:textColorHint="@color/colorPrimary"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="16dp"></LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/catagory_icon_image_viw"
+                        android:layout_width="22sp"
+                        android:layout_height="22sp"
+                        android:src="@drawable/catagory_icon"
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:id="@+id/catagory_label_text_view"
+                        android:layout_toRightOf="@+id/catagory_icon_image_viw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Catagory"
+                        android:textSize="15dp"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+                    <Spinner
+                        android:id="@+id/catagory_selection_spinner"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_width="160dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="16dp"></LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin">
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:padding="20dp"
+                        android:background="@color/colorPrimaryExtraLight"
+                        android:src="@drawable/food_image_default_thumbnail"
+                        android:id="@+id/thumbnail_image_view"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Image Selected"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_toRightOf="@+id/thumbnail_image_view"
+                        android:id="@+id/thumbnail_image_name_text_view"/>
+                    <Button
+                        android:id="@+id/add_thumbnail_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:textStyle="bold"
+                        android:background="@drawable/button_background_accent_color"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:textColor="#FFFFFF"
+                        android:text="Add thumbnail"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="16dp"></LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin">
+                    <ImageView
+                        android:layout_width="178dp"
+                        android:layout_height="100dp"
+                        android:padding="20dp"
+                        android:background="@color/colorPrimaryExtraLight"
+                        android:src="@drawable/food_default_poster"
+                        android:id="@+id/poster_image_view"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Image Selected"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_toRightOf="@+id/poster_image_view"
+                        android:id="@+id/poster_image_name_text_view"/>
+                    <Button
+                        android:id="@+id/add_poster_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/button_background_accent_color"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:text="Add poster"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+</RelativeLayout>

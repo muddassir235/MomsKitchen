@@ -36,4 +36,12 @@ public class FirebaseOperations {
         return null;
     }
 
+    public void uploadImage(){
+
+    }
+
+    public void setOnImageUploadEventListener(){
+
+    }
+
 }

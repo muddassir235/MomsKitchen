@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.momskitchen.momskitchen.NewMealActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_vertical_margin">
+                <ImageButton
+                    android:id="@+id/cancel_add_new_meal_image_button"
+                    android:src="@drawable/cross_icon"
+                    android:layout_width="18dp"
+                    android:layout_height="23dp"
+                    android:background="#00FFFFFF"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginLeft="5dp"
+                    android:layout_alignParentLeft="true"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="ADD MEAL"
+                    android:background="@drawable/button_background_accent_color_transparent"
+                    android:id="@+id/upload_new_meal_data_button"
+                    android:textStyle="bold"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_alignParentRight="true"/>
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/name_icon"
+                    android:id="@+id/name_icon_image_view"
+                    android:layout_marginLeft="5dp"
+                    android:layout_below="@+id/cancel_add_new_meal_image_button"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"/>
+                <EditText
+                    android:id="@+id/meal_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cancel_add_new_meal_image_button"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:hint="Enter the meal's name"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_toRightOf="@+id/name_icon_image_view"
+                    android:background="#00FFFFFF"/>
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_new_meal" />
+
+</android.support.design.widget.CoordinatorLayout>

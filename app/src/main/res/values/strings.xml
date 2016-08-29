@@ -30,4 +30,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_new_meal">NewMealActivity</string>
+    <string name="prompt_hostel_name">Enter Meal Name</string>
+    <string name="prompt_room_number">Enter Description</string>
+    <string name="prompt_destination_name">Enter Price</string>
+
+    <string-array name="catagories_array">
+        <item>Lunch</item>
+        <item>Dessert</item>
+        <item>Compliment</item>
+    </string-array>
 </resources>
