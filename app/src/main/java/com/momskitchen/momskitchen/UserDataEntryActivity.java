@@ -62,6 +62,7 @@ public class UserDataEntryActivity extends AppCompatActivity {
 
                 if(allDataEntered){
                     mDataEntryProgressBar.setVisibility(View.VISIBLE);
+                    mEnterDataButton.setText("");
                     User  user = new User(
                             firebaseUser.getUid(),
                             firebaseUser.getDisplayName(),

@@ -27,4 +27,7 @@
     <string name="action_data_entry_short">Data Entry</string>
     <string name="prompt_landmark">Nearest Landmark (e.g. Mandi Mor)</string>
     <string name="enter_data_prompt">Please enter the following data!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
