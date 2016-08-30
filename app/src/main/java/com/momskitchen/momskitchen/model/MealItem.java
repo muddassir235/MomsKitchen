@@ -1,5 +1,7 @@
 package com.momskitchen.momskitchen.model;
 
+import android.util.Log;
+
 import com.google.firebase.database.ServerValue;
 
 import java.util.HashMap;
@@ -9,29 +11,29 @@ public class MealItem{
 	public String id;
 	public String name;
 	public String description;
-	public long pricePerUnit;
-	public String thumbNailURL;
-	public List<String> imageURLs;
+	public Long pricePerUnit;
+	public String thumbnailURL;
+	public String posterURL;
 	public String discoutId;
 	public String catagory;
 	public String quantityBought;
-	public double averageRating;
-	public double numberOfRatings;
+	public Double averageRating;
+	public Double numberOfRatings;
 	public List<String> commentIds;
 	public Boolean available;
 	public HashMap<String, Object> timeStampCreated;
-	private HashMap<String, Object> timeStampLastChanged;
+	public HashMap<String, Object> timeStampLastChanged;
 
 	public MealItem() {
 	}
 
-	public MealItem(String id, String name, String description, long pricePerUnit, String thumbNailURL, List<String> imageURLs, String discoutId, String catagory, String quantityBought, double averageRating, double numberOfRatings, List<String> commentIds, Boolean available, HashMap<String, Object> timeStampCreated) {
+	public MealItem(String id, String name, String description, Long pricePerUnit, String thumbnailURL, String posterURL, String discoutId, String catagory, String quantityBought, Double averageRating, Double numberOfRatings, List<String> commentIds, Boolean available, HashMap<String, Object> timeStampCreated) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.pricePerUnit = pricePerUnit;
-		this.thumbNailURL = thumbNailURL;
-		this.imageURLs = imageURLs;
+		this.thumbnailURL = thumbnailURL;
+		this.posterURL = posterURL;
 		this.discoutId = discoutId;
 		this.catagory = catagory;
 		this.quantityBought = quantityBought;
@@ -45,8 +47,8 @@ public class MealItem{
 		HashMap<String, Object> dateLastChangedObj = new HashMap<String, Object>();
 		dateLastChangedObj.put("date", ServerValue.TIMESTAMP);
 		this.timeStampLastChanged = dateLastChangedObj;
-
 	}
+
 
 	public HashMap<String, Object> getTimeStampLastChanged() {
 		return timeStampLastChanged;
