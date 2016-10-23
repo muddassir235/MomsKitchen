@@ -17,4 +17,8 @@ public class Constants {
     public static final String FIREBASE_OPERATION_CATEGORY_LUNCH= "lunch/";
     public static final String FIREBASE_OPERATION_CATEGORY_DESSERT= "dessert/";
     public static final String FIREBASE_OPERATION_CATEGORY_COMPLIMENT= "compliments/";
+
+    public static final int ORDER_PENDING = 0;
+    public static final int ORDER_PACKAGED = 1;
+    public static final int ORDER_RECIEVED = 2;
 }

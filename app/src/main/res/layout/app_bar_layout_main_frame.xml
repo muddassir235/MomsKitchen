@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.momskitchen.momskitchen.AdminMainActivity">
+    tools:context=".Admin.ActivitiesPlusFragments.AdminMainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,7 +17,39 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Orders"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/page_title_text_view"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:id="@+id/current_date_text_view"
+                    android:text="Today"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginRight="@dimen/text_margin"
+                    android:layout_toLeftOf="@+id/calendar_icon_image_button"/>
+                <ImageButton
+                    android:id="@+id/calendar_icon_image_button"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/calendar_icon"
+                    android:background="#00FFFFFF"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

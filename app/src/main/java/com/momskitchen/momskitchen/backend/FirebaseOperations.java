@@ -134,7 +134,7 @@ public class FirebaseOperations {
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor = activity.managedQuery(uri, projection, null, null, null);
         if (cursor == null) return null;
-        int column_index =             cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         String s=cursor.getString(column_index);
         cursor.close();
@@ -154,10 +154,12 @@ public class FirebaseOperations {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         // Handle unsuccessful uploads
+                        int index = 0;
                         for(ListIterator<ThumnailUploadedListener> it = thumnailUploadedListeners.listIterator(); it.hasNext(); ){
                             ThumnailUploadedListener aListener = it.next();
                             aListener.onFailure(exception);
-                            posterUploadedListeners.remove(aListener);
+                            thumnailUploadedListeners.remove(index);
+                            index++;
                         }
 
                     }
@@ -166,10 +168,12 @@ public class FirebaseOperations {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                         Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        int index = 0;
                         for(ListIterator<ThumnailUploadedListener> it = thumnailUploadedListeners.listIterator(); it.hasNext(); ){
                             ThumnailUploadedListener aListener = it.next();
                             aListener.onSuccess(downloadUrl);
-                            posterUploadedListeners.remove(aListener);
+                            thumnailUploadedListeners.remove(index);
+                            index ++;
                         }
 
                         Log.e("ui", downloadUrl.toString());
@@ -205,10 +209,12 @@ public class FirebaseOperations {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         // Handle unsuccessful uploads
+                        int index = 0;
                         for(ListIterator<PosterUploadedListener> it = posterUploadedListeners.listIterator(); it.hasNext(); ){
                             PosterUploadedListener aListener = it.next();
                             aListener.onFailure(exception);
-                            posterUploadedListeners.remove(aListener);
+                            posterUploadedListeners.remove(index);
+                            index++;
                         }
                     }
                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -216,11 +222,12 @@ public class FirebaseOperations {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                         Uri downloadUrl = taskSnapshot.getDownloadUrl();
-
+                        int index = 0;
                         for(ListIterator<PosterUploadedListener> it = posterUploadedListeners.listIterator(); it.hasNext(); ){
                             PosterUploadedListener aListener = it.next();
                             aListener.onSuccess(downloadUrl);
-                            posterUploadedListeners.remove(aListener);
+                            posterUploadedListeners.remove(index);
+                            index++;
                         }
                         Log.e("ui", downloadUrl.toString());
                     }
@@ -302,10 +309,12 @@ public class FirebaseOperations {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             // Handle unsuccessful uploads
+                            int index=0;
                             for(ListIterator<PosterUploadedListener> it = posterUploadedListeners.listIterator(); it.hasNext(); ){
                                 PosterUploadedListener aListener = it.next();
                                 aListener.onFailure(exception);
-                                posterUploadedListeners.remove(aListener);
+                                posterUploadedListeners.remove(index);
+                                index++;
                             }
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -313,11 +322,12 @@ public class FirebaseOperations {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                             Uri downloadUrl = taskSnapshot.getDownloadUrl();
-
+                            int index = 0;
                             for(ListIterator<PosterUploadedListener> it = posterUploadedListeners.listIterator(); it.hasNext(); ){
                                 PosterUploadedListener aListener = it.next();
                                 aListener.onSuccess(downloadUrl);
-                                posterUploadedListeners.remove(aListener);
+                                posterUploadedListeners.remove(index);
+                                index++;
                             }
                             Log.e("ui", downloadUrl.toString());
                         }
@@ -360,26 +370,26 @@ public class FirebaseOperations {
         this.listeners.add(listen);
     }
 
-    public FirebaseOperations uploadThumbnailTask(String id,@NonNull String category,Uri imageUri){
+    public FirebaseOperations uploadThumbnailTask(String id, Uri imageUri){
         StorageReference thumbnailRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://kitchen-28900.appspot.com/meals/");
-        firebaseUploadThumbnail(thumbnailRef.child(category).child(id).child("thumbnail"),imageUri);
+        firebaseUploadThumbnail(thumbnailRef.child(id).child("thumbnail"),imageUri);
         return this;
     }
 
-    public FirebaseOperations uploadPosterTask(String id,@NonNull String category,Uri imageUri){
+    public FirebaseOperations uploadPosterTask(String id, Uri imageUri){
         StorageReference posterReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://kitchen-28900.appspot.com/meals/");
-        firebaseUploadPoster(posterReference.child(category).child(id).child("poster"),imageUri);
+        firebaseUploadPoster(posterReference.child(id).child("poster"),imageUri);
         return this;
     }
 
 
-    public FirebaseOperations uploadTask(String id,@NonNull String category,Uri imageUri,int operation){
+    public FirebaseOperations uploadTask(String id, Uri imageUri,int operation){
 
         if(operation==Constants.FIREBASE_OPERATION_UPLOAD_POSTER) {
 
         }
         else if(operation==Constants.FIREBASE_OPERATION_UPLOAD_THUMBNAIL){
-            StorageReference thumbnailReference = FirebaseStorage.getInstance().getReference("gs://kitchen-28900.appspot.com/meals/").child(category).child(id).child("thumbnail");
+            StorageReference thumbnailReference = FirebaseStorage.getInstance().getReference("gs://kitchen-28900.appspot.com/meals/").child(id).child("thumbnail");
             firebaseUploadTask(thumbnailReference,imageUri,operation);
         }
         return this;

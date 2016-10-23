@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -22,11 +22,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CustomerMainActivity"
+            android:name=".Customer.ActivitiesPlusFragments.CustomerMainActivity"
             android:label="@string/title_activity_customer_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AdminMainActivity"
+            android:name=".Admin.ActivitiesPlusFragments.AdminMainActivity"
             android:label="@string/title_activity_admin_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -34,9 +34,38 @@
             android:label="@string/title_activity_user_data_entry"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".NewMealActivity"
+            android:name=".Admin.ActivitiesPlusFragments.NewMealActivity"
             android:label="@string/title_activity_new_meal"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Admin.ActivitiesPlusFragments.MealDetailsActivityAdmin"
+            android:label="@string/title_activity_meal_details_activity_admin"
+            android:theme="@style/AppTheme.MealDetail" />
+        <activity
+            android:name=".Admin.ActivitiesPlusFragments.MenuCreationActivity"
+            android:label="@string/title_activity_menu_creation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Customer.ActivitiesPlusFragments.ShoppingCartActivity"
+            android:label="@string/title_activity_shopping_cart"
+            android:parentActivityName=".Customer.ActivitiesPlusFragments.CustomerMainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Customer.ActivitiesPlusFragments.CustomerMainActivity" />
+        </activity>
+        <service
+            android:name=".messaging.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".messaging.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

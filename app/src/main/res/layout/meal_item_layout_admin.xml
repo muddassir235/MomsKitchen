@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="1px">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryExtraLight"
+        android:padding="40dp"
+        android:id="@+id/meal_thumbnail_image_view"/>
+    <LinearLayout
+        android:layout_below="@+id/meal_thumbnail_image_view"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="@dimen/text_margin"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/meal_info_layout"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/meal_name_text_view"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/meal_price_text_view"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:layout_marginTop="2dp"
+            android:textColor="#FFFFFF"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</RelativeLayout>

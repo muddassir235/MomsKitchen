@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".Admin.ActivitiesPlusFragments.MenuCreationActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin">
+                <ImageButton
+                    android:id="@+id/cancel_menu_creation_button"
+                    android:src="@drawable/cross_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingRight="@dimen/text_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="@dimen/text_margin"
+                    android:paddingLeft="5dp"
+                    android:background="#00FFFFFF"
+                    android:layout_alignParentLeft="true"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="DONE"
+                    android:background="@drawable/button_background_accent_color_transparent"
+                    android:id="@+id/done_creating_menu_button"
+                    android:textStyle="bold"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_alignParentRight="true"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cancel_menu_creation_button"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:id="@+id/from_date_label"
+                            android:text="Date"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/from_date_text_view"
+                            android:textSize="16sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today, 13 Jan 2017"
+                            android:textColor="#FFFFFF"
+                            android:layout_alignParentRight="true"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/to_date_layout"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:id="@+id/to_date_label"
+                            android:text="End Date"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/to_date_text_view"
+                            android:textSize="16sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today, 13 Jan 2017"
+                            android:textColor="#FFFFFF"
+                            android:layout_alignParentRight="true"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/repeat_whole_week_layout"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
+                        <TextView
+                            android:id="@+id/repeat_whole_week_label"
+                            android:text="Repeat for Whole Week"
+                            android:textColor="#FFFFFF"
+                            android:layout_marginTop="3dp"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <Switch
+                            android:id="@+id/repeat_whole_week_switch"
+                            android:textSize="16sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#FFFFFF"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/repeat_whole_month_layout"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
+                        <TextView
+                            android:id="@+id/repeat_whole_month_label"
+                            android:text="Repeat for Whole Month"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginTop="3dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <Switch
+                            android:id="@+id/repeat_whole_month_switch"
+                            android:textSize="16sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#FFFFFF"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            />
+                    </RelativeLayout>
+                    <Button
+                        android:id="@+id/more_options_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MORE OPTIONS"
+                        android:textColor="@color/colorAccentBright"
+                        android:background="#00FFFFFF"
+                        android:textStyle="bold"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_gravity="right"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_menu_creation" />
+
+</android.support.design.widget.CoordinatorLayout>

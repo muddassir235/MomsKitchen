@@ -16,7 +16,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.momskitchen.momskitchen.backend.FirebaseOperations;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.momskitchen.momskitchen.Admin.ActivitiesPlusFragments.AdminMainActivity;
+import com.momskitchen.momskitchen.Admin.Adapters.PendingOrdersAdapter;
+import com.momskitchen.momskitchen.Customer.ActivitiesPlusFragments.CustomerMainActivity;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StartupActivity extends AppCompatActivity {
     private static final String TAG = "StartupActivity: ";
@@ -147,8 +154,39 @@ public class StartupActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK || resultCode == UserDataEntryActivity.RESULT_OK) {
                 // user is signed in!
                 Log.v(TAG, "8. user login successful");
+
                 int userType = getUserType(getApplicationContext());
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if(requestCode == RC_SIGN_IN){
+                    final String token = FirebaseInstanceId.getInstance().getToken();
+                    if(token == null){
+                        try {
+                            FirebaseInstanceId.getInstance().deleteInstanceId();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        FirebaseDatabase.getInstance().getReference().
+                                child("MapUIDtoInstanceID").
+                                child(user.getUid()).
+                                child(token).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (!dataSnapshot.exists()) {
+                                    FirebaseDatabase.getInstance().getReference().
+                                            child("MapUIDtoInstanceID").
+                                            child(user.getUid()).child(token).
+                                            setValue(true);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }
                 if(userType == Constants.DONT_KNOW_USER_TYPE) {
                     Log.v(TAG,"9. don't know user type, fetching user type from firebase");
                     FirebaseDatabase.getInstance().getReference().child("Admins").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
