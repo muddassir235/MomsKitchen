@@ -91,6 +91,7 @@ public class AdminOrderFragment extends Fragment {
         adapter.setDataLoadedListener(new PendingOrdersAdapter.DataLoadedListener() {
             @Override
             public void dataLoaded(int size) {
+                adapter.dismissOrderNotifications(getActivity());
                 loadingProgress.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
                 if(size == 0){

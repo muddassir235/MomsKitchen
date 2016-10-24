@@ -1,6 +1,7 @@
 package com.momskitchen.momskitchen.Customer.ActivitiesPlusFragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -97,25 +99,6 @@ public class CustomerMenuFragment extends Fragment {
 
         int position = getArguments().getInt(ARG_POSITION);
 
-        if(savedInstanceState != null){
-            if(lunchListAdapter.getSize() == 0){
-                view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.lunch_icon);
-                ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no lunch items");
-            }
-
-            if(dessertListAdapter.getSize() == 0){
-                view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.dessert_icon);
-                ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no dessert items");
-            }
-
-            if(complimentListAdapter.getSize() == 0){
-                view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.compliment_icon);
-                ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no compliment items");
-            }
-        }
         anyLunch = false;
         anyDessert = false;
         anyCompliment = false;
@@ -127,45 +110,16 @@ public class CustomerMenuFragment extends Fragment {
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), mColumnCount));
         }
 
+        final LinearLayout emptyLayout = (LinearLayout) view.findViewById(R.id.empty_list_layout);
+        final ImageView emptyIV = (ImageView) view.findViewById(R.id.empty_list_image_view);
+        final TextView emptyTV = (TextView) view.findViewById(R.id.empty_list_text_view);
+
         mealsToAdd = new ArrayList<>();
         mealsToRemove = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         if(position == 1){
             progressLunch = (ProgressBar) view.findViewById(R.id.progress_meals_grid);
             refreshLunch = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_meals_grid);
-            refreshLunch.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    anyLunch = false;
-                    lunchListAdapter.notifyDataSetChanged();
-                    FirebaseDatabase.getInstance().getReference().child("Meals").child("lunch").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            progressLunch.setVisibility(View.GONE);
-                            refreshLunch.setRefreshing(false);
-                            if(!dataSnapshot.exists()){
-                                view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                                ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.lunch_icon);
-                                ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no lunch items");
-                            }else {
-                                if(lunchListAdapter.getSize() > 0) {
-                                    view.findViewById(R.id.empty_list_layout).setVisibility(View.GONE);
-                                }else{
-                                    view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                                    ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.lunch_icon);
-                                    ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no lunch items");
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-                }
-            });
 
             lunchListAdapter = new MealAdapter(getActivity(),currentDate,
                     FirebaseDatabase.getInstance().getReference().child("Meals").child("lunch"),
@@ -173,91 +127,32 @@ public class CustomerMenuFragment extends Fragment {
             );
             recyclerView.setAdapter(lunchListAdapter);
 
-            FirebaseDatabase.getInstance().getReference().child("Meals").child("lunch").addValueEventListener(new ValueEventListener() {
+            lunchListAdapter.setDataLoadedListener(new MealAdapter.DataLoadedListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void dataLoaded(int size) {
                     progressLunch.setVisibility(View.GONE);
                     refreshLunch.setRefreshing(false);
-                    if(!dataSnapshot.exists() || (lunchListAdapter.getSize() == 0)){
-                        view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                        ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.lunch_icon);
-                        ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no lunch items");
+                    if(size == 0){
+                        emptyLayout.setVisibility(View.VISIBLE);
+                        emptyIV.setImageResource(R.drawable.buger_icon);
+                        emptyTV.setText("No lunch items available");
+                        view.setBackgroundColor(Color.parseColor("#ff9f9f"));
+                    }else{
+                        emptyLayout.setVisibility(View.GONE);
+                        view.setBackgroundColor(Color.parseColor("#00ff9f9f"));
                     }
                 }
-
+            });
+            refreshLunch.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-
+                public void onRefresh() {
+                    lunchListAdapter.refreshData();
                 }
             });
 
-            FirebaseDatabase.getInstance().getReference().child("Meals").child("lunch").addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    if(view.findViewById(R.id.empty_list_layout).getVisibility()== View.VISIBLE) {
-                        if((dataSnapshot.getValue(MealItem.class)).dates.contains(currentDate)) {
-                            view.findViewById(R.id.empty_list_layout).setVisibility(View.GONE);
-                        }
-                    }
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-            //recyclerView.setAdapter(lunchListAdapter);
         }else if(position == 2){
             progressDessert = (ProgressBar) view.findViewById(R.id.progress_meals_grid);
             refreshDessert = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_meals_grid);
-            refreshDessert.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    anyDessert = false;
-                    dessertListAdapter.notifyDataSetChanged();
-                    FirebaseDatabase.getInstance().getReference().child("Meals").child("dessert").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            progressDessert.setVisibility(View.GONE);
-                            refreshDessert.setRefreshing(false);
-                            if(!dataSnapshot.exists()) {
-                                view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                                ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.dessert_icon);
-                                ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no dessert items");
-                            }else {
-                                if(dessertListAdapter.getSize() > 0) {
-                                    view.findViewById(R.id.empty_list_layout).setVisibility(View.GONE);
-                                }else{
-                                    view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                                    ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.dessert_icon);
-                                    ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no dessert items");
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            });
 
             dessertListAdapter = new MealAdapter(getActivity(),currentDate,
                     FirebaseDatabase.getInstance().getReference().child("Meals").child("dessert"),
@@ -265,90 +160,33 @@ public class CustomerMenuFragment extends Fragment {
             );
             recyclerView.setAdapter(dessertListAdapter);
 
-            FirebaseDatabase.getInstance().getReference().child("Meals").child("dessert").addValueEventListener(new ValueEventListener() {
+            dessertListAdapter.setDataLoadedListener(new MealAdapter.DataLoadedListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void dataLoaded(int size) {
                     progressDessert.setVisibility(View.GONE);
                     refreshDessert.setRefreshing(false);
-                    if(!dataSnapshot.exists() || (dessertListAdapter.getSize() == 0)){
-                        view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                        ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.dessert_icon);
-                        ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no dessert items");
+                    if(size == 0){
+                        emptyLayout.setVisibility(View.VISIBLE);
+                        emptyIV.setImageResource(R.drawable.ice_cream_icon);
+                        emptyTV.setText("No dessert items available");
+                        view.setBackgroundColor(Color.parseColor("#ff9f9f"));
+                    }else{
+                        emptyLayout.setVisibility(View.GONE);
+                        view.setBackgroundColor(Color.parseColor("#00ff9f9f"));
                     }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
                 }
             });
 
-            FirebaseDatabase.getInstance().getReference().child("Meals").child("dessert").addChildEventListener(new ChildEventListener() {
+            refreshDessert.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    if(view.findViewById(R.id.empty_list_layout).getVisibility()== View.VISIBLE) {
-                        if(dataSnapshot.getValue(MealItem.class).dates.contains(currentDate)) {
-                            view.findViewById(R.id.empty_list_layout).setVisibility(View.GONE);
-                        }
-                    }
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
+                public void onRefresh() {
+                    dessertListAdapter.refreshData();
                 }
             });
 
         }else if(position == 3){
             progressCompliment = (ProgressBar) view.findViewById(R.id.progress_meals_grid);
             refreshCompliment = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_meals_grid);
-            refreshCompliment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    anyCompliment = false;
-                    complimentListAdapter.notifyDataSetChanged();
-                    FirebaseDatabase.getInstance().getReference().child("Meals").child("compliment").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            progressCompliment.setVisibility(View.GONE);
-                            refreshCompliment.setRefreshing(false);
-                            if(!dataSnapshot.exists()) {
-                                view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                                ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.compliment_icon);
-                                ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no complimentary items");
-                            }else {
-                                if(complimentListAdapter.getSize() > 0) {
-                                    view.findViewById(R.id.empty_list_layout).setVisibility(View.GONE);
-                                }else{
-                                    view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                                    ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.compliment_icon);
-                                    ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no complimentary items");
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            });
 
             complimentListAdapter = new MealAdapter(getActivity(),currentDate,
                     FirebaseDatabase.getInstance().getReference().child("Meals").child("compliment"),
@@ -356,52 +194,26 @@ public class CustomerMenuFragment extends Fragment {
             );
             recyclerView.setAdapter(complimentListAdapter);
 
-            FirebaseDatabase.getInstance().getReference().child("Meals").child("compliment").addValueEventListener(new ValueEventListener() {
+            complimentListAdapter.setDataLoadedListener(new MealAdapter.DataLoadedListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void dataLoaded(int size) {
                     progressCompliment.setVisibility(View.GONE);
                     refreshCompliment.setRefreshing(false);
-                    if(!dataSnapshot.exists() || (lunchListAdapter.getSize() == 0)){
-                        view.findViewById(R.id.empty_list_layout).setVisibility(View.VISIBLE);
-                        ((ImageView) view.findViewById(R.id.empty_list_image_view)).setImageResource(R.drawable.compliment_icon);
-                        ((TextView) view.findViewById(R.id.empty_list_text_view)).setText("The are no complimentary items");
+                    if(size == 0){
+                        emptyLayout.setVisibility(View.VISIBLE);
+                        emptyIV.setImageResource(R.drawable.coffee_icon);
+                        emptyTV.setText("No compliments available");
+                        view.setBackgroundColor(Color.parseColor("#ff9f9f"));
+                    }else{
+                        emptyLayout.setVisibility(View.GONE);
+                        view.setBackgroundColor(Color.parseColor("#00ffffff"));
                     }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
                 }
             });
-
-            FirebaseDatabase.getInstance().getReference().child("Meals").child("compliment").addChildEventListener(new ChildEventListener() {
+            refreshCompliment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    if(view.findViewById(R.id.empty_list_layout).getVisibility()== View.VISIBLE) {
-                        if((dataSnapshot.getValue(MealItem.class)).dates.contains(currentDate)) {
-                            view.findViewById(R.id.empty_list_layout).setVisibility(View.GONE);
-                        }
-                    }
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
+                public void onRefresh() {
+                    complimentListAdapter.refreshData();
                 }
             });
         }

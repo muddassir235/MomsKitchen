@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.momskitchen.momskitchen.Admin.ActivitiesPlusFragments.AdminOrdersFragment;
 import com.momskitchen.momskitchen.Constants;
+import com.momskitchen.momskitchen.Customer.MealAdapter;
 import com.momskitchen.momskitchen.R;
 import com.momskitchen.momskitchen.StartupActivity;
 import com.momskitchen.momskitchen.backend.MenuCreator;
@@ -252,17 +253,17 @@ public class CustomerMainActivity extends AppCompatActivity
                         date = MenuCreator.getInstance().getDateFromWeekStartAndDay(weekStart, "SUN");
                         break;
                     default: {
-                    }
-                    ;
+                    };
                     break;
                 }
                 CustomerMenuFragment.currentDate = date;
                 CustomerMenuFragment.anyLunch = false;
                 CustomerMenuFragment.anyDessert = false;
                 CustomerMenuFragment.anyCompliment = false;
-                CustomerMenuFragment.lunchListAdapter.notifyDataSetChanged();
-                CustomerMenuFragment.dessertListAdapter.notifyDataSetChanged();
-                CustomerMenuFragment.complimentListAdapter.notifyDataSetChanged();
+                MealAdapter.currentDate = date;
+                CustomerMenuFragment.lunchListAdapter.refreshData();
+                CustomerMenuFragment.dessertListAdapter.refreshData();
+                CustomerMenuFragment.complimentListAdapter.refreshData();
                 weekDaysDataSource.setSelectedDays(item.getPosition());
                 prevPos = item.getPosition();
             }else{

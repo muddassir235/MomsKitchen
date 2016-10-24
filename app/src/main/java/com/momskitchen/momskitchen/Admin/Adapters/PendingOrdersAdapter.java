@@ -1,5 +1,7 @@
 package com.momskitchen.momskitchen.Admin.Adapters;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -18,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.momskitchen.momskitchen.Admin.ViewHolders.OrderViewHolder;
 import com.momskitchen.momskitchen.R;
+import com.momskitchen.momskitchen.messaging.MyFirebaseMessagingService;
 import com.momskitchen.momskitchen.model.MealItem;
 import com.momskitchen.momskitchen.model.Order;
 import com.momskitchen.momskitchen.model.User;
@@ -72,7 +75,7 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<OrderViewHolder> 
 
         if(position == (currOrdersList.size()-1)){
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.mView.getLayoutParams();
-            params.bottomMargin+=((int)(holder.mView.getResources().getDisplayMetrics().density*5));
+            params.bottomMargin=((int)(holder.mView.getResources().getDisplayMetrics().density*5));
         }
         holder.mOrder = currOrdersList.get(position);
         int numberOfMeals = 0;
@@ -562,6 +565,21 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<OrderViewHolder> 
             reversedList.add(list.get(i));
         }
         return reversedList;
+    }
+
+    public void dismissOrderNotifications(Context context){
+        if(context!=null) {
+            NotificationManager notificationManager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (type == TYPE_ADMIN_PENDING_ORDERS_LIST) {
+                notificationManager.cancelAll();
+            } else {
+                List<Integer> notificationIDs = MyFirebaseMessagingService.getNotificationIDsfromOrderIDs(context, currOrdersList);
+                for (Integer id : notificationIDs) {
+                    notificationManager.cancel(id);
+                }
+            }
+        }
     }
 
 }

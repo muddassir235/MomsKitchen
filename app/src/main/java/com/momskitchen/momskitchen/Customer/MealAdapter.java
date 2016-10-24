@@ -21,6 +21,7 @@ import com.momskitchen.momskitchen.model.Order;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,14 +33,27 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
     public static final int TYPE_DESSERT = 1;
     public static final int TYPE_COMPLIMENT = 2;
 
+    DataLoadedListener dataLoadedListener;
+
     DatabaseReference ref;
     private List<MealItem> mMealList;
     Context mContext;
-    static String currentDate;
+    public static String currentDate;
     int type;
+
+    public interface DataLoadedListener{
+        void dataLoaded(int size);
+    }
+
+    public void setDataLoadedListener(DataLoadedListener loadedListener){
+        this.dataLoadedListener = loadedListener;
+    }
 
     public MealAdapter(Context context, String currDate, DatabaseReference ref, final int type) {
         this.ref = ref;
+        if(OrderHandler.inProcess == null){
+            OrderHandler.inProcess = new HashMap<>();
+        }
         mMealList = new ArrayList<>();
         this.mContext = context;
         currentDate = currDate;
@@ -61,6 +75,9 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
                         }
                     }
                 }
+                if(dataLoadedListener!=null){
+                    dataLoadedListener.dataLoaded(mMealList.size());
+                }
                 notifyDataSetChanged();
             }
 
@@ -81,6 +98,13 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mView.setVisibility(View.VISIBLE);
+        if(position == (mMealList.size()-1)){
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.mView.getLayoutParams();
+            params.bottomMargin =((int)(holder.mView.getResources().getDisplayMetrics().density*100));
+        }else{
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.mView.getLayoutParams();
+            params.bottomMargin = 0;
+        }
         holder.mMealNameTV.setText(getItem(position).name);
         holder.mMealPriceTV.setText(""+getItem(position).pricePerUnit+" PKR");
         Picasso.with(mContext).load(getItem(position).thumbnailURL).into(holder.mMealThumbnailIV);
@@ -165,6 +189,9 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
                 }
 
                 notifyDataSetChanged();
+                if(dataLoadedListener!=null){
+                    dataLoadedListener.dataLoaded(mMealList.size());
+                }
             }
 
             @Override

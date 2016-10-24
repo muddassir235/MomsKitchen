@@ -166,6 +166,7 @@ public class StartupActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }else {
+                        Log.v(TAG, " Token: "+token);
                         FirebaseDatabase.getInstance().getReference().
                                 child("MapUIDtoInstanceID").
                                 child(user.getUid()).
