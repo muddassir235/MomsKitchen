@@ -175,7 +175,11 @@ public class MealListFragment extends Fragment {
                             Palette.Builder palleteBuilder = Palette.from(bitmap);
                             Palette palette = palleteBuilder.generate();
                             viewHolder.mealPosterIV.setImageBitmap(bitmap);
-                            viewHolder.mMealInfoLayout.setBackgroundColor(palette.getVibrantColor(getActivity().getResources().getColor(R.color.colorAccent)));
+                            if(palette!=null) {
+                                if(getActivity()!=null) {
+                                    viewHolder.mMealInfoLayout.setBackgroundColor(palette.getVibrantColor(getActivity().getResources().getColor(R.color.colorAccent)));
+                                }
+                            }
                             lunchTargetMap.remove(position);
                         }
 
@@ -295,7 +299,11 @@ public class MealListFragment extends Fragment {
                             Palette.Builder palleteBuilder = Palette.from(bitmap);
                             Palette palette = palleteBuilder.generate();
                             viewHolder.mealPosterIV.setImageBitmap(bitmap);
-                            viewHolder.mMealInfoLayout.setBackgroundColor(palette.getVibrantColor(getActivity().getResources().getColor(R.color.colorAccent)));
+                            if(palette!=null) {
+                                if(getActivity()!=null) {
+                                    viewHolder.mMealInfoLayout.setBackgroundColor(palette.getVibrantColor(getActivity().getResources().getColor(R.color.colorAccent)));
+                                }
+                            }
                             dessertTargetMap.remove(position);
                         }
 
@@ -416,7 +424,11 @@ public class MealListFragment extends Fragment {
                             Palette.Builder palleteBuilder = Palette.from(bitmap);
                             Palette palette = palleteBuilder.generate();
                             viewHolder.mealPosterIV.setImageBitmap(bitmap);
-                            viewHolder.mMealInfoLayout.setBackgroundColor(palette.getVibrantColor(getActivity().getResources().getColor(R.color.colorAccent)));
+                            if(palette!=null) {
+                                if(getActivity()!=null) {
+                                    viewHolder.mMealInfoLayout.setBackgroundColor(palette.getVibrantColor(getActivity().getResources().getColor(R.color.colorAccent)));
+                                }
+                            }
                             complimentTargetMap.remove(position);
                         }
 

@@ -1,5 +1,6 @@
 package com.momskitchen.momskitchen;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,7 +21,7 @@ import com.momskitchen.momskitchen.model.User;
 
 public class UserDataEntryActivity extends AppCompatActivity {
 
-    public static final int RESULT_OK = 0;
+    //public static final int RESULT_OK = 0;
 
     Button mEnterDataButton;
     AutoCompleteTextView mPhoneTV;

@@ -151,7 +151,7 @@ public class StartupActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN || requestCode == DATA_ENTRY) {
-            if (resultCode == RESULT_OK || resultCode == UserDataEntryActivity.RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 // user is signed in!
                 Log.v(TAG, "8. user login successful");
 

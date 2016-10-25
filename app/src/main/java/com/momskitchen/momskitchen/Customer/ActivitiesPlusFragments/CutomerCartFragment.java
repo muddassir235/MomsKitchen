@@ -134,20 +134,19 @@ public class CutomerCartFragment extends Fragment {
 
         mealLists.setAdapter(adapter);
 
-        NestedScrollView cartScrollView = (NestedScrollView) rootView.findViewById(R.id.cart_scroll_view);
-
-        cartScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                int dy = scrollY-oldScrollY;
-                if(dy>0){
-                    sendOrderButton.setVisibility(View.GONE);
-                }else{
-                    sendOrderButton.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
+//        NestedScrollView cartScrollView = (NestedScrollView) rootView.findViewById(R.id.cart_scroll_view);
+//
+//        cartScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                int dy = scrollY-oldScrollY;
+//                if(dy>0){
+//                    sendOrderButton.setVisibility(View.GONE);
+//                }else{
+//                    sendOrderButton.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
         cartRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -4,11 +4,17 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
 
+    dexOptions{
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+
     defaultConfig {
         applicationId "com.momskitchen.momskitchen"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
+        multiDexEnabled true
         versionName "1.0"
     }
     buildTypes {
@@ -44,6 +50,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.firebaseui:firebase-ui-database:0.5.1'
     compile 'com.android.support:palette-v7:24.2.1'
+    compile 'cn.fanrunqi:avatarimageviewlibrary:1.0.1'
     testCompile 'junit:junit:4.12'
     compile 'com.zaihuishou:expandablerecycleradapter:1.0.2'
 }

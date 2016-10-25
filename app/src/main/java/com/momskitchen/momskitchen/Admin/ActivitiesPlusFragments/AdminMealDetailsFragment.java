@@ -158,7 +158,11 @@ public class AdminMealDetailsFragment extends Fragment {
                             );
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    mealCatagoryIcon.setImageTintList(ColorStateList.valueOf(MealDetailsActivityAdmin.posterPalette.getDarkVibrantColor(getActivity().getResources().getColor(R.color.colorAccent))));
+                    if(MealDetailsActivityAdmin.posterPalette!=null) {
+                        if(getActivity()!=null) {
+                            mealCatagoryIcon.setImageTintList(ColorStateList.valueOf(MealDetailsActivityAdmin.posterPalette.getDarkVibrantColor(getActivity().getResources().getColor(R.color.colorAccent))));
+                        }
+                    }
                 }
             }
         });

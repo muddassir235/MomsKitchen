@@ -64,14 +64,17 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
                 mMealList = new ArrayList<MealItem>();
                 for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
                     MealItem mealItem = dataSnapshot1.getValue(MealItem.class);
-                    if (mealItem.dates.contains(currentDate)) {
-                        mMealList.add(mealItem);
-                        if(type == TYPE_LUNCH) {
-                            CustomerMenuFragment.anyLunch = true;
-                        }else if(type == TYPE_DESSERT){
-                            CustomerMenuFragment.anyDessert = true;
-                        }else if(type == TYPE_COMPLIMENT){
-                            CustomerMenuFragment.anyCompliment = true;
+                    //TODO: check whether mealItem.dates is null
+                    if(mealItem.dates!=null) {
+                        if (mealItem.dates.contains(currentDate)) {
+                            mMealList.add(mealItem);
+                            if (type == TYPE_LUNCH) {
+                                CustomerMenuFragment.anyLunch = true;
+                            } else if (type == TYPE_DESSERT) {
+                                CustomerMenuFragment.anyDessert = true;
+                            } else if (type == TYPE_COMPLIMENT) {
+                                CustomerMenuFragment.anyCompliment = true;
+                            }
                         }
                     }
                 }
@@ -176,14 +179,16 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
                 mMealList = new ArrayList<MealItem>();
                 for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
                     MealItem mealItem = dataSnapshot1.getValue(MealItem.class);
-                    if (mealItem.dates.contains(currentDate)) {
-                        mMealList.add(mealItem);
-                        if(type == TYPE_LUNCH) {
-                            CustomerMenuFragment.anyLunch = true;
-                        }else if(type == TYPE_DESSERT){
-                            CustomerMenuFragment.anyDessert = true;
-                        }else if(type == TYPE_COMPLIMENT){
-                            CustomerMenuFragment.anyCompliment = true;
+                    if(mealItem.dates!=null) {
+                        if (mealItem.dates.contains(currentDate)) {
+                            mMealList.add(mealItem);
+                            if (type == TYPE_LUNCH) {
+                                CustomerMenuFragment.anyLunch = true;
+                            } else if (type == TYPE_DESSERT) {
+                                CustomerMenuFragment.anyDessert = true;
+                            } else if (type == TYPE_COMPLIMENT) {
+                                CustomerMenuFragment.anyCompliment = true;
+                            }
                         }
                     }
                 }

@@ -72,7 +72,11 @@ public class CustomerCartRootListAdapter extends RecyclerView.Adapter<CartRootRe
 
     public CustomerCartRootListAdapter(Activity activity) {
         super();
+        days = new ArrayList<>();
+        dates = new ArrayList<>();
         mealItems = new HashMap<>();
+        mealItemTimes = new HashMap<>();
+        mealItemQuantities = new HashMap<>();
         this.activity = activity;
         loadDataInitailly();
     }
@@ -88,7 +92,7 @@ public class CustomerCartRootListAdapter extends RecyclerView.Adapter<CartRootRe
     public void onBindViewHolder(CartRootRecyclerHolder holder, int position) {
         if(position == (dates.size()-1)){
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.mView.getLayoutParams();
-            params.bottomMargin=((int)(holder.mView.getResources().getDisplayMetrics().density*16));
+            params.bottomMargin=((int)(holder.mView.getResources().getDisplayMetrics().density*100));
         }
         final String finalDate = dates.get(position);
         final List<MealItem> mealItemList = mealItems.get(dates.get(position));

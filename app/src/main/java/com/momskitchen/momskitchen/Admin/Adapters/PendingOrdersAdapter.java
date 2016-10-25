@@ -158,7 +158,8 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<OrderViewHolder> 
                 public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                     switch (status){
                         case STATUS_PENDING:{
-                            Order pendingOrder = pendingOrders.get(position);
+                            // TODO: resolve index out of bound exception at `pendingOrders.get(position)`
+                            Order pendingOrder = currOrdersList.get(position);
                             Order packagedOrder = null;
 
                             MealItem meal = pendingOrder.mealItemList.get(viewHolder.getAdapterPosition());
@@ -235,7 +236,7 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<OrderViewHolder> 
                             userListPackagedRef.setValue(packagedOrder);
                         }break;
                         case STATUS_PACKAGED:{
-                            Order packagedOrder = packagedOrders.get(position);
+                            Order packagedOrder = currOrdersList.get(position);
                             Order recievedOrder = null;
 
                             MealItem meal = packagedOrder.mealItemList.get(viewHolder.getAdapterPosition());

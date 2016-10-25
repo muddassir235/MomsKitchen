@@ -15,13 +15,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,13 +37,16 @@ import com.momskitchen.momskitchen.Customer.MealAdapter;
 import com.momskitchen.momskitchen.R;
 import com.momskitchen.momskitchen.StartupActivity;
 import com.momskitchen.momskitchen.backend.MenuCreator;
+import com.squareup.picasso.Picasso;
 import com.touchboarder.weekdaysbuttons.WeekdaysDataItem;
 import com.touchboarder.weekdaysbuttons.WeekdaysDataSource;
 import com.touchboarder.weekdaysbuttons.WeekdaysDrawableProvider;
 
 import java.io.IOException;
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class CustomerMainActivity extends AppCompatActivity
         implements WeekdaysDataSource.Callback,NavigationView.OnNavigationItemSelectedListener,AdminOrdersFragment.OnFragmentInteractionListener, CustomerMenu.OnFragmentInteractionListener, CustomerMenuFragment.OnListFragmentInteractionListener {
@@ -74,9 +81,9 @@ public class CustomerMainActivity extends AppCompatActivity
         mainFrame = (FrameLayout) findViewById(R.id.main_frame);
         if (savedInstanceState == null) {
             calendar = Calendar.getInstance();
-            if(calendar.get(Calendar.HOUR_OF_DAY)>=14){
-                calendar.add(Calendar.DATE,1);
-            }
+//            if(calendar.get(Calendar.HOUR_OF_DAY)>=14){
+//                calendar.add(Calendar.DATE,1);
+//            }
             CustomerMenuFragment.currentDate = MenuCreator.getInstance().getDateFromCalendar(calendar);
             prevPos = MenuCreator.getInstance().weekDayStringToNumber(
                     MenuCreator.getInstance().getDayFromDate(
@@ -94,9 +101,9 @@ public class CustomerMainActivity extends AppCompatActivity
                 CustomerMenuFragment.currentDate = date;
             }else{
                 calendar = Calendar.getInstance();
-                if(calendar.get(Calendar.HOUR_OF_DAY)>=14){
-                    calendar.add(Calendar.DATE,1);
-                }
+//                if(calendar.get(Calendar.HOUR_OF_DAY)>=14){
+//                    calendar.add(Calendar.DATE,1);
+//                }
                 CustomerMenuFragment.currentDate = MenuCreator.getInstance().getDateFromCalendar(calendar);
             }
             prevPos = savedInstanceState.getInt("PrevPos");
@@ -117,6 +124,40 @@ public class CustomerMainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.inflateHeaderView(R.layout.nav_header_customer_main);
+
+        TextView nameTV = (TextView) headerView.findViewById(R.id.profile_name_text_view);
+        TextView emailTV = (TextView) headerView.findViewById(R.id.profile_email_text_view);
+        final ImageView profileImage = (ImageView) headerView.findViewById(R.id.imageView);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user!=null) {
+            nameTV.setText(user.getDisplayName());
+            emailTV.setText(user.getEmail());
+            List<UserInfo> providers = (List<UserInfo>) user.getProviderData();
+            String photoURL = null;
+            if(user.getPhotoUrl()!=null) {
+                photoURL = user.getPhotoUrl().toString();
+            }else if(providers!=null) {
+                for(UserInfo provider:providers){
+                    if(provider.getPhotoUrl()!=null){
+                        Log.v(TAG, " photo url found:"+provider.getPhotoUrl());
+                        photoURL = provider.getPhotoUrl().toString();
+                    }
+                }
+            }else {
+                Log.v(TAG, " photo url is not available");
+            }
+
+            if(photoURL!=null) {
+                Picasso.with(getApplicationContext()).load(photoURL).resize(getPXfromDP(70f), getPXfromDP(70f)).centerCrop().into(profileImage);
+            }
+
+        }
+    }
+
+    int getPXfromDP(float dps){
+        return (int)(getResources().getDisplayMetrics().density*dps);
     }
 
     @Override
@@ -136,19 +177,7 @@ public class CustomerMainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        } else if (id == R.id.sign_out) {
+        if (id == R.id.sign_out) {
             final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             final String token = FirebaseInstanceId.getInstance().getToken();
             if(token != null){
