@@ -49,7 +49,9 @@ public class OrderContentAdapter extends RecyclerView.Adapter<OrderItemHolder> {
         }
         holder.mNumberOfItemsTV.setText(""+quantities.get(position));
         holder.mItemNameTV.setText(""+meals.get(position).name);
-        holder.mDateTV.setText(""+dates.get(position));
+        RefinedDate date= new RefinedDate();
+        date=convertDate(dates.get(position));
+        holder.mDateTV.setText(""+date.month+" "+date.day+","+date.year);
         holder.mItemTODTV.setText(""+times.get(position));
         holder.mItemCostTV.setText(""+meals.get(position).pricePerUnit*quantities.get(position)+" PKR");
     }
@@ -61,5 +63,30 @@ public class OrderContentAdapter extends RecyclerView.Adapter<OrderItemHolder> {
         }else {
             return 0;
         }
+    }
+    public RefinedDate convertDate(String date){
+        int i =0;
+        String year="";
+        String month="";
+        String day="";
+        for(; i<4; i++){
+            year=year+date.charAt(i);
+        }
+        for(; i<6 ; i++){
+            month=month+date.charAt(i);
+        }
+        for(;i < date.length();i++){
+            day=day+date.charAt(i);
+        }
+        RefinedDate newDate= new RefinedDate();
+        newDate.year=year;
+        newDate.month=month;
+        newDate.day=day;
+        return getMonth(newDate);
+    }
+    private RefinedDate getMonth(RefinedDate date){
+        String[] dates= {"Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","Nov","Dec"};
+        date.month=dates[Integer.valueOf(date.month)-1];
+        return date;
     }
 }
