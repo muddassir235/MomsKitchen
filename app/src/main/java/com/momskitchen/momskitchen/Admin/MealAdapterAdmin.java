@@ -44,9 +44,11 @@ public class MealAdapterAdmin extends RecyclerView.Adapter<MealAdapterAdmin.View
                 mMealList = new ArrayList<MealItem>();
                 for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
                     MealItem mealItem = dataSnapshot1.getValue(MealItem.class);
-                    if (mealItem.dates.contains(currentDate)) {
-                        mMealList.add(mealItem);
-                    }
+                    if(mealItem.dates!=null) {
+                        if (mealItem.dates.contains(currentDate)) {
+                            mMealList.add(mealItem);
+                        }
+                    }else{break;}
                 }
                 notifyDataSetChanged();
             }
@@ -109,9 +111,11 @@ public class MealAdapterAdmin extends RecyclerView.Adapter<MealAdapterAdmin.View
                 mMealList = new ArrayList<MealItem>();
                 for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
                     MealItem mealItem = dataSnapshot1.getValue(MealItem.class);
-                    if (mealItem.dates.contains(currentDate)) {
-                        mMealList.add(mealItem);
-                    }
+                    if(mealItem.dates!=null) {
+                        if (mealItem.dates.contains(currentDate)) {
+                            mMealList.add(mealItem);
+                        }
+                    }else {break;}
                 }
 
                 notifyDataSetChanged();
