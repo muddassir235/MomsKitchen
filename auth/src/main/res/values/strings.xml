@@ -35,8 +35,8 @@
     <string name="next">Next</string>
     <string name="trouble_signing_in">Trouble signing in?</string>
     <string name="sign_in">Sign in</string>
-    <string name="sign_in_with_google">Sign in with Google</string>
-    <string name="sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="sign_in_with_google">Google Sign In</string>
+    <string name="sign_in_with_facebook">Facebook Sign In</string>
     <string name="button_done">Done</string>
     <string name="check_your_email">Check your email</string>
     <string name="recover_password_title">Recover password</string>
@@ -53,7 +53,7 @@
     <string name="idp_name_facebook">Facebook</string>
     <string name="create_account_preamble">"By tapping SAVE you are indicating that you agree to the "</string>
     <string name="terms_of_service">Terms of Service</string>
-    <string name="sign_in_with_email">Sign in with email</string>
+    <string name="sign_in_with_email">Email Sign In</string>
     <string name="login_error">Login unsuccessful</string>
     <string name="email_account_creation_error">Email account registration unsuccessful</string>
     <string name="missing_password_email_toast">Missing password or email</string>

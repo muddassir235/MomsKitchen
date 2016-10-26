@@ -1,5 +1,6 @@
 package com.momskitchen.momskitchen.Customer.ActivitiesPlusFragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -13,6 +14,7 @@ import com.momskitchen.momskitchen.R;
 
 public class ShoppingCartActivity extends AppCompatActivity  implements CutomerCartFragment.OnFragmentInteractionListener,CustomerOrdersFragment.OnFragmentInteractionListener,CustomerPackagedMealFragment.OnFragmentInteractionListener,CustomerDeliveredMealsFragment.OnFragmentInteractionListener {
 
+    public static final String TAB_POSITION_KEY = "position";
     public static ViewPager mealsListViewPager;
     private TabLayout tabLayout;
     private MealsListFragmentsPagerAdapter mealsListFragmentsPagerAdapter;
@@ -24,13 +26,17 @@ public class ShoppingCartActivity extends AppCompatActivity  implements CutomerC
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        int position = 0;
+        if(getIntent()!=null){
+            position = getIntent().getIntExtra(TAB_POSITION_KEY,0);
+        }
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         mealsListFragmentsPagerAdapter = new MealsListFragmentsPagerAdapter(getSupportFragmentManager(),MealsListFragmentsPagerAdapter.ORDERS_CUSTOMER_LIST);
         // Set up the ViewPager with the sections adapter.
         mealsListViewPager = (ViewPager) findViewById(R.id.meal_container);
         if (mealsListViewPager != null) {
             mealsListViewPager.setAdapter(mealsListFragmentsPagerAdapter);
-            mealsListViewPager.setCurrentItem(0);
+            mealsListViewPager.setCurrentItem(position);
         }
 
         tabLayout.setupWithViewPager(mealsListViewPager);

@@ -37,6 +37,12 @@ public class UserDataEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_data_entry);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         bindViews();
+        User user = (User) getIntent().getSerializableExtra("user");
+        if(user!=null){
+            mLandmarkTV.setText(user.nearestLandmark);
+            mAddressTV.setText(user.address);
+            mPhoneTV.setText(user.phone);
+        }
         mEnterDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

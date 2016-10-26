@@ -16,12 +16,19 @@ package com.firebase.ui.auth.ui.idp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.BuildConfig;
@@ -44,6 +51,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import eightbitlab.com.blurview.BlurView;
+import eightbitlab.com.blurview.RenderScriptBlur;
 
 /**
  * Presents the list of authentication options for this app to the user. If an
@@ -69,9 +79,44 @@ public class AuthMethodPickerActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth_method_picker_layout);
+        Log.v(TAG, " inside on create");
 
-        Button emailButton = (Button) findViewById(R.id.email_provider);
+
+        Window window = getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(getResources().getColor(R.color.color_gradient_top));
+        }
+
+        final float radius = 2f;
+
+        final View decorView = getWindow().getDecorView();
+        //Activity's root View. Can also be root View of your layout
+        final View rootView = decorView.findViewById(android.R.id.content);
+        //set background, if your root layout doesn't have one
+        final Drawable windowBackground = decorView.getBackground();
+
+        BlurView blurView = (BlurView) findViewById(R.id.blurView);
+        blurView.setupWith(rootView)
+                .windowBackground(windowBackground)
+                .blurAlgorithm(new RenderScriptBlur(this, true)) //Optional, enabled by default. User can have custom implementation
+                .blurRadius(radius);
+
+
+        RelativeLayout emailButton = (RelativeLayout) findViewById(R.id.email_provider);
         emailButton.setOnClickListener(this);
+
+        Button emailLogin = (Button) findViewById(R.id.email_option_button);
+        emailLogin.setOnClickListener(this);
+        
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         populateIdpList(mActivityHelper.getFlowParams().providerInfo);
 
@@ -108,14 +153,16 @@ public class AuthMethodPickerActivity
         for (final IDPProvider provider: mIdpProviders) {
             View loginButton = null;
             switch (provider.getProviderId()) {
-                case GoogleAuthProvider.PROVIDER_ID:
+                case GoogleAuthProvider.PROVIDER_ID: {
                     loginButton = getLayoutInflater()
                             .inflate(R.layout.idp_button_google, btnHolder, false);
-                    break;
-                case FacebookAuthProvider.PROVIDER_ID:
+                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) loginButton.getLayoutParams();
+                    layoutParams.bottomMargin += getPXFromDP(50);
+                }break;
+                case FacebookAuthProvider.PROVIDER_ID: {
                     loginButton = getLayoutInflater()
                             .inflate(R.layout.idp_button_facebook, btnHolder, false);
-                    break;
+                }break;
                 default:
                     Log.e(TAG, "No button for provider " + provider.getProviderId());
             }
@@ -178,12 +225,18 @@ public class AuthMethodPickerActivity
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.email_provider) {
+        if (view.getId() == R.id.email_provider || view.getId() == R.id.email_option_button) {
             Intent intent = EmailFlowUtil.createIntent(
                     this,
                     mActivityHelper.getFlowParams());
             startActivityForResult(intent, RC_EMAIL_FLOW);
         }
+    }
+
+    int getPXFromDP(int dp){
+        Resources r = getResources();
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
+        return (int) px;
     }
 
     @Override

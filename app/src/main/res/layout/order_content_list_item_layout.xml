@@ -16,20 +16,20 @@
         android:text="Burger"
         android:layout_weight="1"
         android:maxLines="2"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="45dp"
         android:id="@+id/name_of_item"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/date_text_view"
         android:text="24/10/2016"
-        android:layout_marginLeft="135dp"/>
+        android:layout_marginLeft="128dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/time_of_delivery"
         android:text="10:00 am"
-        android:layout_marginLeft="210dp"
+        android:layout_marginLeft="215dp"
         />
     <TextView
         android:id="@+id/item_cost"

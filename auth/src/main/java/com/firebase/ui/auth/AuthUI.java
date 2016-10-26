@@ -409,8 +409,6 @@ public class AuthUI {
 
         /**
          * Enables or disables the use of Smart Lock for Passwords in the sign in flow.
-         *
-         * <p>SmartLock is enabled by default
          */
         public SignInIntentBuilder setIsSmartLockEnabled(boolean enabled) {
             mIsSmartLockEnabled = enabled;

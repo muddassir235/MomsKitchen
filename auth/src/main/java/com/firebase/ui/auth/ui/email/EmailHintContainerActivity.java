@@ -18,8 +18,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
+import com.firebase.ui.auth.R;
 import com.firebase.ui.auth.ui.AcquireEmailHelper;
 import com.firebase.ui.auth.ui.ActivityHelper;
 import com.firebase.ui.auth.ui.AppCompatBase;
@@ -30,6 +35,7 @@ import com.google.android.gms.auth.api.credentials.Credential;
 
 public class EmailHintContainerActivity extends AppCompatBase {
     private static final int RC_HINT = 13;
+    private static final String TAG = EmailHintContainerActivity.class.getName()+": ";
     private AcquireEmailHelper mAcquireEmailHelper;
 
     @Override
@@ -38,6 +44,20 @@ public class EmailHintContainerActivity extends AppCompatBase {
         mAcquireEmailHelper = new AcquireEmailHelper(mActivityHelper);
         FirebaseAuthWrapper apiWrapper =
                 FirebaseAuthWrapperFactory.getFirebaseAuthWrapper(mActivityHelper.getAppName());
+
+        Log.v(TAG, " inside on create");
+        Window window = getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(getResources().getColor(R.color.color_gradient_top));
+        }
 
         PendingIntent hintIntent = apiWrapper.getEmailHintIntent(this);
         if (hintIntent != null) {

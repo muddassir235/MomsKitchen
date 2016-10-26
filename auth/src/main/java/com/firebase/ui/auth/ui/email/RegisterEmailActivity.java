@@ -17,14 +17,18 @@ package com.firebase.ui.auth.ui.email;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -63,6 +67,21 @@ public class RegisterEmailActivity extends AppCompatBase implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_email_layout);
 
+        Log.v(TAG, " inside on create");
+
+        Window window = getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(getResources().getColor(R.color.color_gradient_top));
+        }
+
         String email = getIntent().getStringExtra(ExtraConstants.EXTRA_EMAIL);
         mEmailEditText = (EditText) findViewById(R.id.email);
 
@@ -73,14 +92,14 @@ public class RegisterEmailActivity extends AppCompatBase implements View.OnClick
         getResources().getValue(R.dimen.slightly_visible_icon, slightlyVisibleIcon, true);
 
         mPasswordEditText = (EditText) findViewById(R.id.password);
-        mTogglePasswordImage = (ImageView) findViewById(R.id.toggle_visibility);
+        //mTogglePasswordImage = (ImageView) findViewById(R.id.toggle_visibility);
 
         mPasswordEditText.setOnFocusChangeListener(new ImageFocusTransparencyChanger(
-                mTogglePasswordImage,
+                null,
                 visibleIcon.getFloat(),
                 slightlyVisibleIcon.getFloat()));
 
-        mTogglePasswordImage.setOnClickListener(new PasswordToggler(mPasswordEditText));
+        //mTogglePasswordImage.setOnClickListener(new PasswordToggler(mPasswordEditText));
 
         mNameEditText = (EditText) findViewById(R.id.name);
 

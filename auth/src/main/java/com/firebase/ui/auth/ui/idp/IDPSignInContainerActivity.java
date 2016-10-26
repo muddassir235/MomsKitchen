@@ -17,6 +17,7 @@ package com.firebase.ui.auth.ui.idp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.firebase.ui.auth.provider.FacebookProvider;
 import com.firebase.ui.auth.provider.GoogleProvider;
@@ -47,6 +48,8 @@ public class IDPSignInContainerActivity extends IDPBaseActivity implements IDPPr
         super.onCreate(savedInstanceState);
         mProvider = getIntent().getStringExtra(ExtraConstants.EXTRA_PROVIDER);
         mEmail = getIntent().getStringExtra(ExtraConstants.EXTRA_EMAIL);
+
+        Log.v(TAG, " inside on create");
         IDPProviderParcel providerParcel = null;
         for (IDPProviderParcel parcel : mActivityHelper.getFlowParams().providerInfo) {
             if (parcel.getProviderType().equalsIgnoreCase(mProvider)) {

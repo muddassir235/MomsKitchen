@@ -29,15 +29,21 @@ class ImageFocusTransparencyChanger implements View.OnFocusChangeListener {
         mTogglePasswordImage = togglePasswordImage;
         mVisible = visible;
         mSlightlyVisible = slightlyVisible;
-        mTogglePasswordImage.setAlpha(mSlightlyVisible);
+        if(mTogglePasswordImage!=null) {
+            mTogglePasswordImage.setAlpha(mSlightlyVisible);
+        }
     }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            mTogglePasswordImage.setAlpha(mVisible);
+            if(mTogglePasswordImage!=null) {
+                mTogglePasswordImage.setAlpha(mVisible);
+            }
         } else {
-            mTogglePasswordImage.setAlpha(mSlightlyVisible);
+            if(mTogglePasswordImage!=null) {
+                mTogglePasswordImage.setAlpha(mSlightlyVisible);
+            }
         }
 
     }

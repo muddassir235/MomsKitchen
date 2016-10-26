@@ -29,6 +29,9 @@
             android:layout_margin="@dimen/text_margin"
             android:text="French Fries"
             android:layout_toRightOf="@+id/meal_thumbnail_image_view"
+            android:layout_toEndOf="@+id/meal_thumbnail_image_view"
+            android:layout_toLeftOf="@+id/meal_price_text_view"
+            android:layout_toStartOf="@+id/meal_price_text_view"
             android:textStyle="bold"
             android:maxLines="1"
             android:textAppearance="?attr/textAppearanceListItem" />

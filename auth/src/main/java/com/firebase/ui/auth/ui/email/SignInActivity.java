@@ -16,11 +16,15 @@ package com.firebase.ui.auth.ui.email;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -48,12 +52,26 @@ public class SignInActivity extends AppCompatBase implements View.OnClickListene
     private EditText mPasswordEditText;
     private EmailFieldValidator mEmailValidator;
     private RequiredFieldValidator mPasswordValidator;
-    private ImageView mTogglePasswordImage;
+//    private ImageView mTogglePasswordImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_layout);
+        Window window = getWindow();
+
+        Log.v(TAG, " inside on create");
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(getResources().getColor(R.color.color_gradient_top));
+        }
 
         String email = getIntent().getStringExtra(ExtraConstants.EXTRA_EMAIL);
 
@@ -66,14 +84,14 @@ public class SignInActivity extends AppCompatBase implements View.OnClickListene
         getResources().getValue(R.dimen.slightly_visible_icon, slightlyVisibleIcon, true);
 
         mPasswordEditText = (EditText) findViewById(R.id.password);
-        mTogglePasswordImage = (ImageView) findViewById(R.id.toggle_visibility);
+        //mTogglePasswordImage = (ImageView) findViewById(R.id.toggle_visibility);
 
         mPasswordEditText.setOnFocusChangeListener(new ImageFocusTransparencyChanger(
-                mTogglePasswordImage,
+                null,
                 visibleIcon.getFloat(),
                 slightlyVisibleIcon.getFloat()));
 
-        mTogglePasswordImage.setOnClickListener(new PasswordToggler(mPasswordEditText));
+        //mTogglePasswordImage.setOnClickListener(new PasswordToggler(mPasswordEditText));
 
         mEmailValidator = new EmailFieldValidator((TextInputLayout) findViewById(R.id
                 .email_layout));

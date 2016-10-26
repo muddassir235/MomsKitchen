@@ -17,12 +17,16 @@ package com.firebase.ui.auth.ui;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.firebase.ui.auth.BuildConfig;
+import com.firebase.ui.auth.R;
 import com.firebase.ui.auth.provider.IDPProviderParcel;
 import com.firebase.ui.auth.ui.idp.AuthMethodPickerActivity;
 import com.firebase.ui.auth.ui.idp.IDPSignInContainerActivity;
@@ -31,6 +35,7 @@ import com.firebase.ui.auth.util.CredentialsApiHelper;
 import com.firebase.ui.auth.util.EmailFlowUtil;
 import com.firebase.ui.auth.util.PlayServicesHelper;
 import com.google.android.gms.auth.api.credentials.Credential;
+import com.google.android.gms.auth.api.credentials.CredentialsApi;
 import com.google.android.gms.auth.api.credentials.IdentityProviders;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -80,6 +85,22 @@ public class ChooseAccountActivity extends ActivityBase {
                                 finish(RESULT_CANCELED, new Intent());
                             }
                         });
+
+        Log.v(TAG, " inside on create");
+
+        Window window = getWindow();
+
+// clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        // finally change the color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(getResources().getColor(R.color.color_gradient_top));
+        }
+
 
         if (!madeAvailable) {
             Log.w(TAG, "playServices: could not make available.");
@@ -207,7 +228,8 @@ public class ChooseAccountActivity extends ActivityBase {
                             mCredentialsApi.getPasswordFromCredential(),
                             mCredentialsApi.getAccountTypeFromCredential()
                     );
-                } else if (resultCode == RESULT_CANCELED) {
+                } else if (resultCode == RESULT_CANCELED
+                        || resultCode == CredentialsApi.ACTIVITY_RESULT_OTHER_ACCOUNT) {
                     // Smart lock selector cancelled, go to the AuthMethodPicker screen
                     startAuthMethodChoice(mActivityHelper);
                 } else if (resultCode == RESULT_FIRST_USER) {

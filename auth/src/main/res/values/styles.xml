@@ -5,9 +5,16 @@
         <item name="colorPrimaryDark">@color/authui_colorPrimaryDark</item>
         <item name="colorAccent">@color/authui_colorAccent</item>
         <item name="colorButtonNormal">@color/authui_colorPrimary</item>
-
+        <item name="android:windowBackground">@drawable/gradient_1</item>
         <item name="android:buttonStyle">@style/FirebaseUI.Button</item>
         <item name="android:editTextStyle">@style/FirebaseUI.EditText</item>
+    </style>
+
+    <style name="SignInNoPasswordStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/authui_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/authui_colorAccent</item>
+        <item name="colorAccent">@color/authui_colorPrimary</item>
+        <item name="colorButtonNormal">@color/authui_colorPrimary</item>
     </style>
 
     <style name="FirebaseUI.Dialog" parent="Base.Theme.AppCompat.Light.Dialog.MinWidth">
@@ -26,15 +33,13 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingLeft">24dp</item>
-        <item name="android:paddingRight">24dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
     </style>
 
     <style name="FirebaseUI.Translucent">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@drawable/gradient_1</item>
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
@@ -106,10 +111,14 @@
     <!-- Common styles -->
     <style name="FirebaseUI.Text.TextInputLayout">
         <item name="android:paddingTop">8dp</item>
+        <item name="colorAccent">@color/authui_colorAccent</item>
+        <item name="colorControlNormal">@color/authui_colorAccent</item>
+        <item name="colorControlActivated">@color/authui_colorAccent</item>
+        <item name="android:textColorHint">#AAFFFFFF</item>
     </style>
 
     <style name="FirebaseUI.Text.HintText" parent="FirebaseUI.Text.T12">
-        <item name="android:textColor">@color/inputLabelColor</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="FirebaseUI.Text.ErrorText" parent="FirebaseUI.Text.T12">
@@ -151,13 +160,19 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:colorActivatedHighlight">@color/authui_colorPrimary</item>
-        <item name="android:colorFocusedHighlight">@color/authui_colorPrimary</item>
+        <item name="android:colorActivatedHighlight">#FFFFFF</item>
+        <item name="android:colorFocusedHighlight">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#FFFFFF</item>
     </style>
 
     <style name="FirebaseUI.EditText.PasswordField">
         <item name="android:hint">@string/password_hint</item>
         <item name="android:inputType">textPassword</item>
+        <item name="android:colorActivatedHighlight">#FFFFFF</item>
+        <item name="android:colorFocusedHighlight">@color/authui_colorAccent</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#AAFFFFFF</item>
     </style>
 
     <style name="FirebaseUI.ImageView"></style>
@@ -184,7 +199,7 @@
     <style name="FirebaseUI.Text.BodyText" parent="FirebaseUI.Text.T08">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/bodyTextColor</item>
+        <item name="android:textColor">#FFFFFF</item>
         <item name="android:paddingBottom">16dp</item>
     </style>
 
@@ -205,9 +220,8 @@
 
     <style name="FirebaseUI.AuthMethodPicker.ButtonHolder">
         <item name="android:orientation">vertical</item>
-        <item name="android:paddingBottom">56dp</item>
         <item name="android:clipToPadding">false</item>
-        <item name="android:layout_width">220dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
@@ -226,22 +240,23 @@
     </style>
 
     <style name="FirebaseUI.Button.AccountChooser.EmailButton">
-        <item name="android:drawableLeft">@drawable/ic_email_white_18dp</item>
-        <item name="android:visibility">gone</item>
-        <item name="android:background">@drawable/idp_button_background_email</item>
-        <item name="android:textColor">#ffffff</item>
+        <item name="android:background">@drawable/email_button_gradient</item>
     </style>
 
     <style name="FirebaseUI.Button.AccountChooser.GoogleButton">
-        <item name="android:drawableLeft">@drawable/logo_googleg_color_18dp</item>
+        <item name="android:drawableLeft">@drawable/google_logo</item>
         <item name="android:background">@drawable/idp_button_background_google</item>
-        <item name="android:textColor">#757575</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="FirebaseUI.Button.AccountChooser.FacebookButton">
         <item name="android:drawableLeft">@drawable/com_facebook_button_icon_white</item>
         <item name="android:background">@drawable/idp_button_background_facebook</item>
-        <item name="android:textColor">@color/com_facebook_button_text_color</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 

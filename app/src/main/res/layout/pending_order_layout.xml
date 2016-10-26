@@ -96,26 +96,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/number_of_items"
-                android:text="#"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+                android:text="Qt"
+                android:layout_marginLeft="-1dp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
                 android:layout_weight="1"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="45dp"
                 android:id="@+id/name_of_item"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date"
-                android:layout_marginLeft="135dp"/>
+                android:layout_marginLeft="128dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/time_of_delivery"
                 android:text="Time"
-                android:layout_marginLeft="210dp"
+                android:layout_marginLeft="215dp"
                 />
             <TextView
                 android:id="@+id/item_cost"

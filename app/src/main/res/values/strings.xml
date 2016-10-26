@@ -132,4 +132,5 @@
     </string>
     <string name="title_activity_menu_creation">MenuCreationActivity</string>
     <string name="title_activity_shopping_cart">Orders</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 </resources>

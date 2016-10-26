@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +37,9 @@ import com.momskitchen.momskitchen.Constants;
 import com.momskitchen.momskitchen.Customer.MealAdapter;
 import com.momskitchen.momskitchen.R;
 import com.momskitchen.momskitchen.StartupActivity;
+import com.momskitchen.momskitchen.UserDataEntryActivity;
 import com.momskitchen.momskitchen.backend.MenuCreator;
+import com.momskitchen.momskitchen.model.User;
 import com.squareup.picasso.Picasso;
 import com.touchboarder.weekdaysbuttons.WeekdaysDataItem;
 import com.touchboarder.weekdaysbuttons.WeekdaysDataSource;
@@ -47,6 +50,8 @@ import java.security.Provider;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import static com.momskitchen.momskitchen.Customer.ActivitiesPlusFragments.CustomerMenu.SHOPPING_CART_ORDER_REQUEST;
 
 public class CustomerMainActivity extends AppCompatActivity
         implements WeekdaysDataSource.Callback,NavigationView.OnNavigationItemSelectedListener,AdminOrdersFragment.OnFragmentInteractionListener, CustomerMenu.OnFragmentInteractionListener, CustomerMenuFragment.OnListFragmentInteractionListener {
@@ -61,6 +66,7 @@ public class CustomerMainActivity extends AppCompatActivity
 
     private WeekdaysDataSource weekDaysDataSource;
 
+    FirebaseUser mUser;
     private int prevPos;
 
     @Override
@@ -130,14 +136,14 @@ public class CustomerMainActivity extends AppCompatActivity
         TextView nameTV = (TextView) headerView.findViewById(R.id.profile_name_text_view);
         TextView emailTV = (TextView) headerView.findViewById(R.id.profile_email_text_view);
         final ImageView profileImage = (ImageView) headerView.findViewById(R.id.imageView);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user!=null) {
-            nameTV.setText(user.getDisplayName());
-            emailTV.setText(user.getEmail());
-            List<UserInfo> providers = (List<UserInfo>) user.getProviderData();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(mUser!=null) {
+            nameTV.setText(mUser.getDisplayName());
+            emailTV.setText(mUser.getEmail());
+            List<UserInfo> providers = (List<UserInfo>) mUser.getProviderData();
             String photoURL = null;
-            if(user.getPhotoUrl()!=null) {
-                photoURL = user.getPhotoUrl().toString();
+            if(mUser.getPhotoUrl()!=null) {
+                photoURL = mUser.getPhotoUrl().toString();
             }else if(providers!=null) {
                 for(UserInfo provider:providers){
                     if(provider.getPhotoUrl()!=null){
@@ -177,7 +183,55 @@ public class CustomerMainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.sign_out) {
+        if (id == R.id.cart){
+
+            Intent intent = new Intent(this, ShoppingCartActivity.class);
+            intent.putExtra(ShoppingCartActivity.TAB_POSITION_KEY,0);
+            startActivityForResult(intent,SHOPPING_CART_ORDER_REQUEST);
+
+        }else if(id == R.id.orders){
+
+            Intent intent = new Intent(this, ShoppingCartActivity.class);
+            intent.putExtra(ShoppingCartActivity.TAB_POSITION_KEY,1);
+            startActivityForResult(intent,SHOPPING_CART_ORDER_REQUEST);
+
+        }else if(id == R.id.packaged){
+
+            Intent intent = new Intent(this, ShoppingCartActivity.class);
+            intent.putExtra(ShoppingCartActivity.TAB_POSITION_KEY,2);
+            startActivityForResult(intent,SHOPPING_CART_ORDER_REQUEST);
+
+        }else if(id == R.id.recieved){
+
+            Intent intent = new Intent(this, ShoppingCartActivity.class);
+            intent.putExtra(ShoppingCartActivity.TAB_POSITION_KEY,3);
+            startActivityForResult(intent,SHOPPING_CART_ORDER_REQUEST);
+
+        }else if(id == R.id.profile_edit) {
+            final Intent intent = new Intent(this, UserDataEntryActivity.class);
+            if(mUser!=null) {
+                FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            User usr = dataSnapshot.getValue(User.class);
+                            intent.putExtra("user", usr);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(getApplicationContext(), "Your profile doesn't exist!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }else{
+                Toast.makeText(getApplicationContext(), "Your profile doesn't exist!",Toast.LENGTH_SHORT).show();
+            }
+
+        }else if(id == R.id.sign_out) {
             final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             final String token = FirebaseInstanceId.getInstance().getToken();
             if(token != null){

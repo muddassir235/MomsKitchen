@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="User Cart Info">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/cart"
+                    android:icon="@drawable/cart_grey"
+                    android:title="Cart"/>
+                <item
+                    android:id="@+id/orders"
+                    android:icon="@drawable/orders_icon"
+                    android:title="Orders"/>
+                <item
+                    android:id="@+id/packaged"
+                    android:icon="@drawable/packaged_icon"
+                    android:title="Packaged"/>
+                <item
+                    android:id="@+id/recieved"
+                    android:icon="@drawable/recieved_icon"
+                    android:title="Received"/>
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/profile_edit"
+        android:icon="@drawable/person_icon"
+        android:title="Profile"/>
 
     <item
         android:id="@+id/sign_out"
