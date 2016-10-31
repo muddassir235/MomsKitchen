@@ -105,7 +105,9 @@ public class NewMealActivity extends AppCompatActivity {
         activity = this;
         setSupportActionBar(toolbar);
 
+        timesList = new ArrayList<>();
         setupTimesSelectionAlertDialog();
+
 
         mTimesAvailableTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +123,7 @@ public class NewMealActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         mMealCatagorySpinner.setAdapter(adapter);
 
-        timesList = new ArrayList<>();
+
 
         changedThumbnailInEditMode = false;
         changedPosterInEditMode = false;
@@ -484,7 +486,7 @@ public class NewMealActivity extends AppCompatActivity {
 
             }
         });
-
+        setupTimesSelectionAlertDialog();
     }
 
     void bindViews(){
@@ -505,17 +507,34 @@ public class NewMealActivity extends AppCompatActivity {
 
     void setupTimesSelectionAlertDialog(){
         final String[] items = {
-                "6:00 am", "7:00 am", "8:00 am",
-                "9:00 am", "10:00 am", "11:00 am",
+                "06:00 am", "07:00 am", "08:00 am",
+                "09:00 am", "10:00 am", "11:00 am",
                 "12:00 pm", "01:00 pm", "02:00 pm",
                 "03:00 pm", "04:00 pm", "05:00 pm",
                 "06:00 pm", "07:00 pm", "08:00 pm",
                 "09:00 pm", "10:00 pm", "11:00 pm"
         };
+        for(int i = 0 ; i < timesList.size(); i ++){
+            Log.e("timesList",timesList.get(i));
+        }
+        boolean[] checkedBooleans= new boolean[18];
+        for(int i = 0 ; i< items.length; i++){
+            for(int j = 0 ; j < timesList.size();j++){
+                if(items[i].equals(timesList.get(j))){
+                    checkedBooleans[i]=true;
+                    break;
+                }
+                else{
+                    checkedBooleans[i]=false;
+                }
+            }
+        }
+
+
         //final ArrayList itemsSelected = new ArrayList();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delivery Times for this item?");
-        builder.setMultiChoiceItems(items, null,
+        builder.setMultiChoiceItems(items,checkedBooleans,
                 new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int selectedItemId,
@@ -656,4 +675,5 @@ public class NewMealActivity extends AppCompatActivity {
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
         return (int) px;
     }
+
 }
